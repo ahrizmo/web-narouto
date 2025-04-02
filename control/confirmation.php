@@ -1,10 +1,35 @@
 <?php
 	$racine_path = '../';
-	$titre = "Merci d'avoir pris contact avec nous";
+	$title = "Merci d'avoir pris contact avec nous";
+    $email = $_POST['email'];
+
 	include($racine_path."templates/front/header.php");
-	
-	echo "<div style='position: flex; margin-top: 300px; text-align: center'><h4> Nous vous répondrons dans les plus brefs delais</h4></div>";
-	
+
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupération des valeurs du formulaire
+    $email = $_POST["email"] ;
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
+
+    // Adresse du destinataire (celui qui reçoit le mail)
+    $to = "sylvain.rochas@alumni.univ-avignon.fr";
+
+    // Vérifier si l'email est valide
+
+    $headers = "From: $email\r\n";
+
+    // Envoi de l'email
+    if (mail($to, $subject, $message, $headers)) {
+
+        echo "<p class ='mt-40 flex-grow'>E-mail envoyé avec succès !</p> ";
+    } else {
+        echo "Échec de l'envoi de l'e-mail.";
+    }
+}
+    // En-têtes de l'e-mail
+
+
 	include($racine_path."templates/front/footer.php");
 
 ?>
