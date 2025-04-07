@@ -4,6 +4,12 @@ $racine_path = './';
 
 session_start();
 
+$_SESSION['crsf'] = bin2hex(random_bytes(32));
+if (!isset($_SESSION["user"]) && isset($_COOKIE["user_email"])) {
+    // Recrée la session à partir du cookie
+    $_SESSION["user"] = $_COOKIE["user_email"];
+}
+
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['user'])) {
