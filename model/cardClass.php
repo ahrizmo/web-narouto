@@ -59,6 +59,51 @@ class Card
 
     }
 
+    public function showCardsElement($element)
+    {
+        try {
+            $conn = DataBase::getInstance()->getConnection();
+            $query = "SELECT * FROM card WHERE element = ? ORDER BY cardid";
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$element]);
+            $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch(PDOException $e) {
+            echo "An error has occurred: " . $e->getMessage();
+        }
+    }
+
+    public function showCardsName($name)
+    {
+        try {
+            $conn = DataBase::getInstance()->getConnection();
+            $Name = $name.'%';
+            $query = "SELECT * FROM card WHERE name like ? ORDER BY cardid";
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$Name]);
+            $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch(PDOException $e) {
+            echo "An error has occurred: " . $e->getMessage();
+        }
+    }
+
+
+    public function showCardsFilter($name,$element)
+    {
+        try {
+            $conn = DataBase::getInstance()->getConnection();
+            $Name = $name.'%';
+            $query = "SELECT * FROM card WHERE name like ? and element = ? ORDER BY cardid";
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$Name,$element]);
+            $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch(PDOException $e) {
+            echo "An error has occurred: " . $e->getMessage();
+        }
+    }
+
     public function getInfo($cardid)
     {
         try {

@@ -6,7 +6,9 @@ include($racine_path."templates/front/header.php");
 
 $action = $racine_path."control/reg_confirm.php";
 $method = "POST";
-
+if(empty($_SESSION["crsf"])){
+    $_SESSION['crsf'] = bin2hex(random_bytes(32));
+}
 include($racine_path . "templates/front/reg_formulaire.php");
 
 if (isset($_POST) && isset($_POST['name'])) {

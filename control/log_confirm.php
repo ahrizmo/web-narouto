@@ -20,12 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $client = new User("", $password, $email);
 
-    if(!($client->connect($email,$password))){
-        echo "pass: ";
+    if(($_POST['crsf'] == $_SESSION['crsf']) or!($client->connect($email,$password))){
+        header("Location: login-1");
         exit();
     }
     $_SESSION["user"] = $email;
-    header("Location: ../index.php");
+    setcookie("user_email", $email, time() + 604800, "/", "", true, true);
+    header("Location: ./");
     // Vérifier si l'email existe déjà
 
 

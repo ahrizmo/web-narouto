@@ -4,9 +4,11 @@ $racine_path = '../';
 $title = 'Login';
 include($racine_path."templates/front/header.php");
 
-$action = $racine_path."control/log_confirm.php";
+$action = "./log_confirm";
 $method = "POST";
-
+if(empty($_SESSION["crsf"])){
+    $_SESSION['crsf'] = bin2hex(random_bytes(32));
+}
 include($racine_path . "templates/front/log_formulaire.php");
 
 
